@@ -11,13 +11,15 @@ export default class NuevaConexion extends Component {
         peso: ''
       };
     }
-    componentWillMount(){
-      this.setState(()=>{
-        if(this.props.editar)
-        return {nodoUno: this.props.editar.nodoUno,
-                nodoDos: this.props.editar.nodoDos,
-                peso: this.props.editar.peso}
-      })
+    componentDidMount(){
+      if(this.props.mostrar){
+        this.nodoUnoInput.focus();
+      }
+    }
+    componentDidUpdate(){
+      if(this.props.mostrar){
+        this.nodoUnoInput.focus();
+      }
     }
     handleNodoUno = e=>{
       let nombre = e.target.value.toUpperCase();
@@ -73,9 +75,9 @@ export default class NuevaConexion extends Component {
           <div className="nuevoNodo">
             <div className="titulo">Agrega o Edita una Conexión</div>
             <form action="">
-              <input type="text" placeholder="Nombre del Primer Nodo" onChange={this.handleNodoUno} value={this.state.nodoUno}/>
-              <input type="text" placeholder="Nombre del Segundo Nodo" onChange={this.handleNodoDos} value={this.state.nodoDos}/>
-              <input type="text" placeholder="Peso de la Conexión" onChange={this.handlePeso} value={this.state.peso}/>
+              <input className="inpCon" ref={(inp)=>{this.nodoUnoInput = inp;}} type="text" placeholder="Nombre del Primer Nodo" onChange={this.handleNodoUno} value={this.state.nodoUno}/>
+              <input className="inpCon" type="text" placeholder="Nombre del Segundo Nodo" onChange={this.handleNodoDos} value={this.state.nodoDos}/>
+              <input className="inpCon" type="text" placeholder="Peso de la Conexión" onChange={this.handlePeso} value={this.state.peso}/>
               <div id="errorConex2" className="error ocultar"></div>
               <div className="botones">
                 <button className="btn" onClick={this.datosForm}>Enviar</button>

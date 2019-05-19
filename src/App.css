@@ -70,6 +70,7 @@ body {
   box-shadow: 3px 2px 5px rgba(30,30,30,0.75);
   border-radius: 7px;
   width: 80%;
+  min-width: 23em;
 }
 .titulo{
   display: block;
@@ -77,14 +78,29 @@ body {
   font-size: 1.3em;
 }
 input[type="text"]{
+  display: inline-flex;
   margin: .3em;
   padding: .3em;
-  width: 90%;
   text-align: center;
   font-size: .9em;
   border-radius: 3px;
   border: 1px solid #579;
   color: #345;
+}
+input[type="text"]:focus{
+  border: 3px solid #79a;
+  box-shadow: 3px 2px 5px rgba(170,190,230,0.75);
+  margin: calc(.3em-3px);
+}
+.inpNodo{
+  width: 45%;
+  min-width: 15em;
+  max-width: 35em;
+}
+.inpCon{
+  width: 30%;
+  min-width: 15em;
+  max-width: 23em;
 }
 /* checkbox */
 .check{
@@ -162,16 +178,6 @@ td{
 }
 main{
   margin: 0;
-  margin-bottom: 3em;
-}
-.names{
-  margin: auto;
-  margin-bottom: 1em;
-  width: 80%;
-  border-top: 1px solid #579;
-  box-shadow: 3px 2px 5px rgba(30,30,30,0.75);
-  border-radius: 7px;
-  background-color: rgba(70,70,90,0.3);
 }
 .name{
   margin: 0.3em 1em;

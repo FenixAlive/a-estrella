@@ -20,7 +20,11 @@ export default class NuevoNodo extends Component {
     })
   }
   componentDidMount(){
-    console.log(this.nombreInput);
+    if(this.props.mostrar){
+      this.nombreInput.focus();
+    }
+  }
+  componentDidUpdate(){
     if(this.props.mostrar){
       this.nombreInput.focus();
     }
@@ -125,8 +129,8 @@ export default class NuevoNodo extends Component {
         <div className="nuevoNodo">
           <div className="titulo">Agrega o Edita un Nodo</div>
           <form action="">
-            <input ref={(inp)=>{this.nombreInput = inp;}} type="text" placeholder="Nombre del Nodo" onChange={this.handleNombre} value={this.state.nombre} required/>
-            <input type="text" placeholder="Heuristica del Nodo" onChange={this.handleHeuristica} value={this.state.heuristica}/>
+            <input className="inpNodo" ref={(inp)=>{this.nombreInput = inp;}} type="text" placeholder="Nombre del Nodo" onChange={this.handleNombre} value={this.state.nombre} required/>
+            <input className="inpNodo" type="text" placeholder="Heuristica del Nodo" onChange={this.handleHeuristica} value={this.state.heuristica}/>
             {checkIni}
             {checkFin}
 

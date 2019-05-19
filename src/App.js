@@ -208,17 +208,17 @@ export default class App extends Component {
             posFinal={this.state.posFinal}
             nodos={this.state.nodos}
           />
+          <footer className="nuevoNodo">
+            <div className="title">Sistemas Inteligentes I</div>
+            <div className="title">Profesor: Dr. Jorge Daniel Rios Arrañaga</div>
+            <div>
+              <h3 className="title">Alumnos:</h3>
+              <span className="name">Amina Noemi Franco Maldonado</span>
+              <span className="name">Luis Angel Muñoz Franco</span>
+              <span className="name">Carlos de Jesus Sandoval Ochoa</span>
+            </div>
+          </footer>
         </main>
-        <footer className="names">
-          <div className="title">Sistemas Inteligentes I</div>
-          <div className="title">Profesor: Dr. Jorge Daniel Rios Arrañaga</div>
-          <div>
-            <h3 className="title">Alumnos:</h3>
-            <span className="name">Amina Noemi Franco Maldonado</span>
-            <span className="name">Luis Angel Muñoz Franco</span>
-            <span className="name">Carlos de Jesus Sandoval Ochoa</span>
-          </div>
-        </footer>
       </div>
     );
   }

@@ -7,10 +7,13 @@ export default class Resultado extends Component {
     super(props);
 
     this.state = {
+      resultado:{nodos:[],
+                 costo: 0}
     };
   }
   error=()=>{
     var divError = document.getElementById("errorRes");
+    var divRes = document.getElementById("resultado");
     divError.innerHTML = '';
     var val = 1;
     if(!this.props.hayInicial){
@@ -23,8 +26,10 @@ export default class Resultado extends Component {
     }
     if(!val){
       divError.classList.remove("ocultar");
+      divRes.classList.add("ocultar")
     }else {
       divError.classList.add("ocultar");
+      divRes.classList.remove("ocultar")
       this.aEstrella();
     }
   }
@@ -44,13 +49,22 @@ export default class Resultado extends Component {
   var posInicial = this.props.posInicial;
   var posFinal = this.props.posFinal;
   var posActual = posInicial;
+  listaCerrada.push(posActual);
+  console.log(listaCerrada);
+  Object.keys(nodos[listaCerrada[0]]['conexiones']).map(key =>
+    listaAbierta.push(key)
+  )
+
+  posActual = listaAbierta.shift();
   }
   render() {
     return (
       <div className="res">
         <div className="title">Resultado:</div>
         <div id="errorRes" className="error ocultar"></div>
-        <div className="contRes">Hola {this.state.count}</div>
+        <div id="resultado" className="contRes">
+          resultado
+        </div>
       </div>
     );
   }
