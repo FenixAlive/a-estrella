@@ -130,6 +130,10 @@ export default class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Algoritmo A estrella</h1>
+          <h3>Alumnos:</h3>
+          <h5>Amina Noemi Franco Maldonado</h5>
+          <h5>Luis Angel Muñoz Franco</h5>
+          <h5>Carlos de Jesus Sandoval Ochoa</h5>
         </header>
         <main className="App-main">
           <div id="errorConex" className="error ocultar"></div>
