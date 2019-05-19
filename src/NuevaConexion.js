@@ -71,14 +71,14 @@ export default class NuevaConexion extends Component {
       if (this.props.mostrar){
         return (
           <div className="nuevoNodo">
-            <div className="titulo">Nueva Conexión</div>
+            <div className="titulo">Agrega o Edita una Conexión</div>
             <form action="">
               <input type="text" placeholder="Nombre del Primer Nodo" onChange={this.handleNodoUno} value={this.state.nodoUno}/>
               <input type="text" placeholder="Nombre del Segundo Nodo" onChange={this.handleNodoDos} value={this.state.nodoDos}/>
               <input type="text" placeholder="Peso de la Conexión" onChange={this.handlePeso} value={this.state.peso}/>
               <div id="errorConex2" className="error ocultar"></div>
               <div className="botones">
-                <button className="btn" onClick={this.datosForm}>Crear Conexión</button>
+                <button className="btn" onClick={this.datosForm}>Enviar</button>
                 <button className="btnRed" onClick={this.cancelar}>Cancelar</button>
               </div>
             </form>

@@ -9,7 +9,7 @@ export default class NuevoNodo extends Component {
       nombre: '',
       heuristica: '',
       esInicial: false,
-      esFinal: false
+      esFinal: false,
     };
   }
   componentWillMount(){
@@ -20,6 +20,7 @@ export default class NuevoNodo extends Component {
     })
   }
   componentDidMount(){
+    console.log(this.nombreInput);
     if(this.props.mostrar){
       this.nombreInput.focus();
     }
@@ -40,14 +41,32 @@ export default class NuevoNodo extends Component {
     })
   }
   handleCheckboxInicial = e=>{
+    var check = document.getElementById("checkFin");
+    if(check !== null){
+      if(this.state.esInicial){
+        check.classList.remove("ocultar");
+      }else{
+        check.classList.add("ocultar");
+      }
+    }
     this.setState(()=>{
       return {esInicial: !this.state.esInicial}
     })
+
   }
   handleCheckboxFinal = e=>{
+    var check = document.getElementById("checkIni");
+    if(check !== null){
+      if(this.state.esFinal){
+        check.classList.remove("ocultar");
+      }else{
+        check.classList.add("ocultar");
+      }
+    }
     this.setState(()=>{
       return {esFinal: !this.state.esFinal}
     })
+
   }
   datosForm = e =>{
     e.preventDefault();
@@ -56,17 +75,17 @@ export default class NuevoNodo extends Component {
       divErrorNodo.innerHTML = '';
       divErrorNodo.classList.add("ocultar");
       this.props.nuevosDatosNodo(this.state)
+      this.setState(()=>{
+        return {nombre: '',
+        heuristica: '',
+        esInicial: false,
+        esFinal: false
+        }
+      })
     }else{
       divErrorNodo.innerHTML = "El nombre del nodo no puede estar vacio";
       divErrorNodo.classList.remove("ocultar");
     }
-    this.setState(()=>{
-      return {nombre: '',
-              heuristica: '',
-              esInicial: false,
-              esFinal: false
-            }
-    })
   }
   cancelar = e =>{
     e.preventDefault();
@@ -85,7 +104,7 @@ export default class NuevoNodo extends Component {
       var checkIni= "";
       var checkFin = "";
       if(!this.props.hayInicial){
-        checkIni = <div className="checkIni">
+        checkIni = <div className="checkIni" id="checkIni">
           <label className="check"><input type="checkbox"
             id="esIni"
             onChange={this.handleCheckboxInicial}/>
@@ -94,7 +113,7 @@ export default class NuevoNodo extends Component {
         </div>
       }
       if(!this.props.hayFinal){
-        checkFin = <div className="checkFin">
+        checkFin = <div className="checkFin" id="checkFin">
           <label className="check"><input type="checkbox"
             id="esFin"
             onChange={this.handleCheckboxFinal}/>
@@ -104,7 +123,7 @@ export default class NuevoNodo extends Component {
       }
       return (
         <div className="nuevoNodo">
-          <div className="titulo">Nuevo Nodo</div>
+          <div className="titulo">Agrega o Edita un Nodo</div>
           <form action="">
             <input ref={(inp)=>{this.nombreInput = inp;}} type="text" placeholder="Nombre del Nodo" onChange={this.handleNombre} value={this.state.nombre} required/>
             <input type="text" placeholder="Heuristica del Nodo" onChange={this.handleHeuristica} value={this.state.heuristica}/>
@@ -113,7 +132,7 @@ export default class NuevoNodo extends Component {
 
             <div id="errorNodo" className="error ocultar"></div>
             <div className="botones">
-              <button className="btn" onClick={this.datosForm}>Crear Nodo</button>
+              <button className="btn" onClick={this.datosForm}>Enviar</button>
               <button className="btnRed" onClick={this.cancelar}>Cancelar</button>
             </div>
           </form>

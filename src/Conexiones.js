@@ -9,10 +9,22 @@ export default class Conexiones extends Component {
     this.state = {
     };
   }
+  eliminar=()=>{
+    this.props.eliminarConex(this.props.nodoP, this.props.nodo)
+  }
 
   render() {
     return (
-      <span>{this.props.nodo}-{this.props.conex}, </span>
+      <table>
+        <tbody>
+          <tr className="ptconex">
+            <td className="tconex">{this.props.nodo}</td>
+            <td className="tconex">{this.props.conex.peso}</td>
+            <td className="tconex">{this.props.conex.final}</td>
+            <td className="tconex"><button className="btnRed" onClick={this.eliminar}>X</button></td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
 

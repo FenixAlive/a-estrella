@@ -24,7 +24,7 @@ export default class TablaGrafo extends Component {
         <td>{nodo.esInicial ? "si" : ""}</td>
         <td>{nodo.esFinal ? "si" : ""}</td>
         <td>
-          {Object.keys(nodo.conexiones).map(conex => <Conexiones key={conex} nodo={conex} conex={nodo.conexiones[conex]}/>)}
+          {Object.keys(nodo.conexiones).map(conex => <Conexiones key={conex} nodoP={nNodo} nodo={conex} conex={nodo.conexiones[conex]} eliminarConex={this.props.eliminarConex}/>)}
         </td>
         <td><button ref={nNodo} className="btnRed" onClick={this.eliminar}>X</button></td>
       </tr>

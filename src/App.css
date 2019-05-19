@@ -4,7 +4,6 @@
 body {
   text-align: center;
   background-color: #272c37;
-
   color: white;
 }
 .App-header{
@@ -41,7 +40,6 @@ body {
   outline: none;
 }
 .btnRed {
-  margin-left: 1em;
   padding: .3em .7em;
   border-radius: 13px;
   background-color: #e77;
@@ -64,11 +62,11 @@ body {
 .nuevoNodo{
   text-align: center;
   font-size: .9em;
-  background-color: #357;
+  background-color: rgba(70,70,90,0.3);
   color: #ddf;
   margin: 1em;
   padding: 1em;
-  border: 1px solid #579;
+  border-top: 1px solid #579;
   box-shadow: 3px 2px 5px rgba(30,30,30,0.75);
   border-radius: 7px;
   width: 80%;
@@ -86,6 +84,7 @@ input[type="text"]{
   font-size: .9em;
   border-radius: 3px;
   border: 1px solid #579;
+  color: #345;
 }
 /* checkbox */
 .check{
@@ -108,7 +107,17 @@ input[type="text"]{
   border-top: 1px solid #579;
   box-shadow: 3px 2px 5px rgba(30,30,30,0.75);
   border-radius: 7px;
-  background-color: rgba(70,70,90,0.3)
+  background-color: rgba(70,70,90,0.3);
+}
+.res{
+  margin: 1.3em;
+  padding: 1em;
+  width: 80%;
+  height: 100%;
+  border-top: 1px solid #579;
+  box-shadow: 3px 2px 5px rgba(30,30,30,0.75);
+  border-radius: 7px;
+  background-color: rgba(70,70,90,0.3);
 }
 .error{
   border-top: 1px solid #933;
@@ -134,8 +143,40 @@ th{
   border: 1px solid #789;
   margin: .01em;
   padding: .3em;
+  font-size: .7em;
 }
 td{
   border: 1px solid #345;
   padding: .3em;
+}
+.ptconex{
+  display: inline-table;
+  text-align: center;
+  width: 100%;
+}
+.tconex{
+  width: auto;
+  font-size: .7em;
+  padding: .3em!important;
+  margin: 0!important;
+}
+main{
+  margin: 0;
+  margin-bottom: 3em;
+}
+.names{
+  margin: auto;
+  margin-bottom: 1em;
+  width: 80%;
+  border-top: 1px solid #579;
+  box-shadow: 3px 2px 5px rgba(30,30,30,0.75);
+  border-radius: 7px;
+  background-color: rgba(70,70,90,0.3);
+}
+.name{
+  margin: 0.3em 1em;
+  display: inline-block;
+}
+.res{
+  min-height: 3em;
 }
