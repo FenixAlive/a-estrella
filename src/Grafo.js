@@ -12,12 +12,9 @@ export default class Grafo extends Component {
   }
   render() {
     const rawNodos = this.props.nodos;
-    var nodos;
-    if(rawNodos){
-      const nodos = Object.keys(rawNodos).map(nNodo =>
-        <TablaGrafo key={nNodo} nNodo={nNodo} nodo={rawNodos[nNodo]} eliminar={this.props.eliminar} eliminarConex={this.props.eliminarConex}/>
-      )
-    }
+    const nodos = Object.keys(rawNodos).map(nNodo =>
+      <TablaGrafo key={nNodo} nNodo={nNodo} nodo={rawNodos[nNodo]} eliminar={this.props.eliminar} eliminarConex={this.props.eliminarConex}/>
+    )
     return (
       <div className="grafo">
         <div className="titulo">Grafo</div>

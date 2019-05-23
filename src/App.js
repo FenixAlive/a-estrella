@@ -24,7 +24,6 @@ export default class App extends Component {
   componentDidMount(){
     //tomar datos de localStorage
     var nodos = JSON.parse(localStorage.getItem("nodos"));
-    console.log("nodos ", nodos);
     if(nodos){
       this.setState(()=>{
         return {
