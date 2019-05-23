@@ -50,9 +50,9 @@ export default class Resultado extends Component {
   var posFinal = this.props.posFinal;
   var posActual = posInicial;
   listaCerrada.push(posActual);
-  console.log(listaCerrada);
+  console.log("Lista cerrada", listaCerrada);
   Object.keys(nodos[listaCerrada[0]]['conexiones']).map(key =>
-    listaAbierta.push(key)
+    listaAbierta.push([key, posActual])
   )
 
   posActual = listaAbierta.shift();
@@ -63,7 +63,7 @@ export default class Resultado extends Component {
         <div className="title">Resultado:</div>
         <div id="errorRes" className="error ocultar"></div>
         <div id="resultado" className="contRes">
-          resultado
+          Calculando ...
         </div>
       </div>
     );

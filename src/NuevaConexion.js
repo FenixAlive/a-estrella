@@ -16,11 +16,6 @@ export default class NuevaConexion extends Component {
         this.nodoUnoInput.focus();
       }
     }
-    componentDidUpdate(){
-      if(this.props.mostrar){
-        this.nodoUnoInput.focus();
-      }
-    }
     handleNodoUno = e=>{
       let nombre = e.target.value.toUpperCase();
       this.setState(()=>{

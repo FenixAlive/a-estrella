@@ -33,7 +33,6 @@ export default class Grafo extends Component {
                         <tr className="ptconex">
                             <th className="tconex">Nodo</th>
                             <th className="tconex">Peso</th>
-                            <th className="tconex">f=g+h</th>
                             <th className="tconex">Eliminar</th>
                         </tr>
                       </thead>

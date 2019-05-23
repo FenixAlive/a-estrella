@@ -24,11 +24,6 @@ export default class NuevoNodo extends Component {
       this.nombreInput.focus();
     }
   }
-  componentDidUpdate(){
-    if(this.props.mostrar){
-      this.nombreInput.focus();
-    }
-  }
   handleNombre = e=>{
     let nombre = e.target.value.toUpperCase();
     this.setState(()=>{
