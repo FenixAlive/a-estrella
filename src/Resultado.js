@@ -39,23 +39,89 @@ export default class Resultado extends Component {
   componentDidUpdate(){
     this.error()
   }
+  encontrarCamino = (camino, posActual)=>{
+    var caminoTotal = [posActual];
+    while(posActual in camino){
+      posActual = camino[posActual];
+      caminoTotal.push(posActual);
+    }
+    caminoTotal.reverse()
+    console.log("Llegaste", caminoTotal);
+    return caminoTotal;
+  }
   aEstrella=()=>{
+    var divRes = document.getElementById("resultado");
     console.log(this.props.nodos);
-    console.log(this.props.hayInicial, this.props.hayFinal);
     console.log(this.props.posInicial, this.props.posFinal);
-  const nodos = this.props.nodos;
-  var listaAbierta = [];
-  var listaCerrada = [];
-  var posInicial = this.props.posInicial;
-  var posFinal = this.props.posFinal;
-  var posActual = posInicial;
-  listaCerrada.push(posActual);
-  console.log("Lista cerrada", listaCerrada);
-  Object.keys(nodos[listaCerrada[0]]['conexiones']).map(key =>
-    listaAbierta.push([key, posActual])
-  )
+    const nodos = this.props.nodos;
 
-  posActual = listaAbierta.shift();
+    //Algoritmo
+    var listaAbierta = [];
+    var listaCerrada = [];
+    var camino = {};
+    var GAcum = {};
+    var FAcum = {};
+
+    var posInicial = this.props.posInicial;
+    var posFinal = this.props.posFinal;
+
+    //datos de la posicion inicial
+    var posActual = posInicial;
+    listaAbierta.push(posActual);
+    FAcum[posInicial] = nodos[posInicial]['heuristica'];
+    GAcum[posInicial] = 0;
+
+    //comienza while
+    while(listaAbierta.length){
+      posActual = listaAbierta.shift();
+      listaCerrada.push(posActual);
+      console.log("Abierta", listaAbierta)
+      console.log("Cerrada", listaCerrada)
+      //si el actual es el final
+      if(posActual === posFinal){
+        //llamar a función que reconstruya el camino hasta ahi
+        var caminoFinal = this.encontrarCamino(camino, posActual);
+        return this.mostrarResultado(caminoFinal)
+      }
+      Object.keys(nodos[posActual]['conexiones']).map(keyVecino =>{
+        //revisar la lista  a ver si no esta ya en ella
+        if(!listaCerrada.includes(keyVecino)){
+          var continuar = true;
+          //calcular nuevo G total del nodo
+          let gCalc = GAcum[posActual]+nodos[posActual]['conexiones'][keyVecino];
+          //revisar si no estaba antes en la lista abierta
+          if(!listaAbierta.includes(keyVecino)){
+            listaAbierta.push(keyVecino);
+          }
+          else if(gCalc >= GAcum[keyVecino]){
+            continuar = false;
+          }
+          if(continuar){
+            camino[keyVecino] = posActual;
+            GAcum[keyVecino] = gCalc;
+            FAcum[keyVecino] = GAcum[keyVecino] + nodos[keyVecino]['heuristica'];
+          }
+        }
+      })
+      console.log("nueva abierta", listaAbierta);
+      //ordenar la lista abierta de menor a mayor
+      listaAbierta.sort((a,b)=>{
+        if(FAcum[a]>FAcum[b]){
+          return 1;
+        }
+        if(FAcum[a]<FAcum[b]){
+          return -1;
+        }
+        return 0;
+      })
+    }
+    divRes.innerHTML = `<div>No existe una conexión entre el nodo inicial y el final, no hay solución.</div>`
+  }
+  mostrarResultado = caminoFinal =>{
+        var divRes = document.getElementById("resultado");
+        divRes.innerHTML = `<div>El resultado final es: ${caminoFinal.map(val=> val)}</div>`
+        //divRes.insertAdjacentHTML('beforeend', `<div>Es necesario agregar un Nodo Final</div>`);
+
   }
   render() {
     return (
