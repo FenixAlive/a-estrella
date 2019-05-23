@@ -23,17 +23,21 @@ export default class App extends Component {
   }
   componentDidMount(){
     //tomar datos de localStorage
-    this.setState(()=>{
-      return {
-        posInicial: localStorage.getItem("posInicial"),
-        hayInicial: localStorage.getItem("hayInicial") === "true",
-        posFinal: localStorage.getItem("posFinal"),
-        hayFinal: localStorage.getItem("hayFinal") === "true",
-        nodos: JSON.parse(localStorage.getItem("nodos")),
-        resultado: localStorage.getItem("resultado")
-      }
-    },()=>{
-    })
+    var nodos = JSON.parse(localStorage.getItem("nodos"));
+    console.log("nodos ", nodos);
+    if(nodos){
+      this.setState(()=>{
+        return {
+          posInicial: localStorage.getItem("posInicial"),
+          hayInicial: localStorage.getItem("hayInicial") === "true",
+          posFinal: localStorage.getItem("posFinal"),
+          hayFinal: localStorage.getItem("hayFinal") === "true",
+          nodos: nodos,
+          resultado: localStorage.getItem("resultado")
+        }
+      },()=>{
+      })
+    }
   }
   crearNodo = () =>{
     this.setState(()=>{
