@@ -19,7 +19,7 @@ export default class Conexiones extends Component {
         <tbody>
           <tr className="ptconex">
             <td className="tconex">{this.props.nodo}</td>
-            <td className="tconex">{this.props.conex.peso}</td>
+            <td className="tconex">{this.props.conex}</td>
             <td className="tconex"><button className="btnRed" onClick={this.eliminar}>X</button></td>
           </tr>
         </tbody>

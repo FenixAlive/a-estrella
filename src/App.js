@@ -17,8 +17,23 @@ export default class App extends Component {
       hayFinal: false,
       posInicial: '',
       posFinal: '',
-      nodos: {}
+      nodos: {},
+      resultado : []
     };
+  }
+  componentDidMount(){
+    //tomar datos de localStorage
+    this.setState(()=>{
+      return {
+        posInicial: localStorage.getItem("posInicial"),
+        hayInicial: localStorage.getItem("hayInicial") === "true",
+        posFinal: localStorage.getItem("posFinal"),
+        hayFinal: localStorage.getItem("hayFinal") === "true",
+        nodos: JSON.parse(localStorage.getItem("nodos")),
+        resultado: localStorage.getItem("resultado")
+      }
+    },()=>{
+    })
   }
   crearNodo = () =>{
     this.setState(()=>{
@@ -43,10 +58,6 @@ export default class App extends Component {
       nodos[datos.nombre] = {};
       nodos[datos.nombre]['conexiones'] = {};
     }else{
-      // tiene conexiones, hay que cambiar el dato de suma final dentro de la misma
-      Object.keys(nodos[datos.nombre]['conexiones']).map(conex=>
-        nodos[datos.nombre]['conexiones'][conex]['final'] = parseFloat(nodos[datos.nombre]['conexiones'][conex]['peso'])+parseFloat(datos.heuristica)
-      )
       //si ya existia y era inicial o Final
       if(nodos[datos.nombre].esInicial && datos.esFinal){
           this.setState(()=>{
@@ -54,6 +65,12 @@ export default class App extends Component {
               hayInicial: false,
               posInicial: ''
             }
+          }, ()=>{
+            //localStorage
+            localStorage.removeItem("hayInicial");
+            localStorage.setItem("hayInicial", this.state.hayInicial);
+            localStorage.removeItem("posInicial");
+            localStorage.setItem("posInicial", this.state.posInicial);
           })
       }else if(nodos[datos.nombre].esFinal && datos.esInicial){
         this.setState(()=>{
@@ -61,6 +78,12 @@ export default class App extends Component {
             hayFinal: false,
             posFinal: ''
           }
+        }, ()=>{
+          //localStorage
+          localStorage.removeItem("hayFinal");
+          localStorage.setItem("hayFinal", this.state.hayFinal);
+          localStorage.removeItem("posFinal");
+          localStorage.setItem("posFinal", this.state.posFinal);
         })
       }
     }
@@ -71,6 +94,12 @@ export default class App extends Component {
           posInicial: datos.nombre
 
         }
+      }, ()=>{
+        //localStorage
+        localStorage.removeItem("hayInicial");
+        localStorage.setItem("hayInicial", this.state.hayInicial);
+        localStorage.removeItem("posInicial");
+        localStorage.setItem("posInicial", this.state.posInicial);
       })
     }else if(datos.esFinal){
       this.setState(()=>{
@@ -78,9 +107,15 @@ export default class App extends Component {
           hayFinal: true,
           posFinal: datos.nombre
         }
+      }, ()=>{
+        //localStorage
+        localStorage.removeItem("hayFinal");
+        localStorage.setItem("hayFinal", this.state.hayFinal);
+        localStorage.removeItem("posFinal");
+        localStorage.setItem("posFinal", this.state.posFinal);
       })
     }
-    nodos[datos.nombre]['heuristica'] = datos.heuristica;
+    nodos[datos.nombre]['heuristica'] = parseFloat(datos.heuristica);
     nodos[datos.nombre]['esInicial'] = datos.esInicial;
     nodos[datos.nombre]['esFinal'] = datos.esFinal;
 
@@ -89,6 +124,10 @@ export default class App extends Component {
       return {
         nodos: nodos
       }
+    }, ()=>{
+      //guardar state en localStorage
+      localStorage.removeItem("nodos")
+      localStorage.setItem("nodos", JSON.stringify(this.state.nodos));
     })
     this.crearNodo();
   }
@@ -108,19 +147,18 @@ export default class App extends Component {
       console.log("No se puede crear conexión en el nodo: ", datos.nodoDos);
     }
     if(ok){
-      nodosConex[datos.nodoUno]['conexiones'][datos.nodoDos] = {};
-      nodosConex[datos.nodoUno]['conexiones'][datos.nodoDos]['peso'] = datos.peso;
-      nodosConex[datos.nodoUno]['conexiones'][datos.nodoDos]['final'] =parseFloat(datos.peso)+parseFloat(nodosConex[datos.nodoUno]['heuristica']);
-      nodosConex[datos.nodoDos]['conexiones'][datos.nodoUno] = {};
-      nodosConex[datos.nodoDos]['conexiones'][datos.nodoUno]['peso'] = parseFloat(datos.peso);
-      nodosConex[datos.nodoDos]['conexiones'][datos.nodoUno]['final'] =parseFloat(datos.peso)+parseFloat(nodosConex[datos.nodoDos]['heuristica']);
+      nodosConex[datos.nodoUno]['conexiones'][datos.nodoDos] = parseFloat(datos.peso);
+      nodosConex[datos.nodoDos]['conexiones'][datos.nodoUno] = parseFloat(datos.peso);
       divError.classList.add("ocultar");
       this.setState(()=>{
         return {
           nodos: nodosConex
         }
+      }, ()=>{
+        //guardar state en localStorage
+        localStorage.removeItem("nodos")
+        localStorage.setItem("nodos", JSON.stringify(this.state.nodos));
       })
-      // console.log(this.state);
     }else{
       divError.classList.remove("ocultar");
     }
@@ -134,6 +172,10 @@ export default class App extends Component {
         return {
           hayInicial: false
         }
+      }, ()=>{
+        //guardar state en localStorage
+        localStorage.removeItem("hayInicial")
+        localStorage.setItem("hayInicial", this.state.hayInicial);
       })
     }
     if(nodosCopy[nodo].esFinal){
@@ -141,6 +183,10 @@ export default class App extends Component {
         return {
           hayFinal: false
         }
+      }, ()=>{
+        //guardar state en localStorage
+        localStorage.removeItem("hayFinal")
+        localStorage.setItem("hayFinal", this.state.hayFinal);
       })
     }
     delete nodosCopy[nodo];
@@ -151,6 +197,10 @@ export default class App extends Component {
       return {
         nodos: nodosCopy
       }
+    }, ()=>{
+      //guardar state en localStorage
+      localStorage.removeItem("nodos")
+      localStorage.setItem("nodos", JSON.stringify(this.state.nodos));
     })
   }
   eliminarConex = (nodoP, nodoC)=>{
@@ -161,6 +211,21 @@ export default class App extends Component {
       return {
         nodos: nodosCopy
       }
+    }, ()=>{
+      //guardar state en localStorage
+      localStorage.removeItem("nodos")
+      localStorage.setItem("nodos", JSON.stringify(nodosCopy));
+    })
+  }
+  setResultado = (res)=>{
+    this.setState(()=>{
+      return {
+        resultado: res
+      }
+    }, ()=>{
+      //guardar state en localStorage
+      localStorage.removeItem("resultado")
+      localStorage.setItem("resultado", JSON.stringify(this.state.resultado));
     })
   }
   render() {
@@ -207,6 +272,8 @@ export default class App extends Component {
             hayFinal={this.state.hayFinal}
             posFinal={this.state.posFinal}
             nodos={this.state.nodos}
+            setRes={this.setResultado}
+            res = {this.state.resultado}
           />
           <footer className="nuevoNodo">
             <div className="title">Sistemas Inteligentes I</div>
