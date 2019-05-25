@@ -77,15 +77,16 @@ export default class Resultado extends Component {
 
     //imprimir datos hasta ahora
     divRes.insertAdjacentHTML('beforeend', `<div class="titRes">Detalle del resultado por Iteración: </div>`);
-    divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Posición inicial de Busqueda: Nodo ${posInicial}, Posición Final: Nodo ${posFinal}</div>`);
+    divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Posición inicial de Busqueda: <code>(Nodo ${posInicial})</code>, Posición Final: <code>(Nodo ${posFinal})</code></div>`);
     divRes.insertAdjacentHTML('beforeend', `<div class="titRes">--- Iteración ${count} ---</div>`);
-    divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Lista Abierta: [${listaAbierta}]</div>`);
+    divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Lista Abierta: <code>[${listaAbierta}]</code></div>`);
     //comienza while
     while(listaAbierta.length){
       posActual = listaAbierta.shift();
       listaCerrada.push(posActual);
-      divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Posición Actual: ${posActual}</div>`);
-      divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Lista Cerrada: [${listaCerrada}]</div>`);
+      divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Posición Actual: <code>(nodo: ${posActual})</code></div>`);
+      divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Lista Cerrada: <code>[${listaCerrada}]</code></div>`);
+      divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Lista Abierta Restante antes de agregar nuevos: <code>[${listaAbierta}]</code></div>`);
       console.log("Abierta", listaAbierta)
       console.log("Cerrada", listaCerrada)
       //si el actual es el final
@@ -107,7 +108,7 @@ export default class Resultado extends Component {
         this.mostrarResultado(caminoFinal)
         })
         //imprimir resultados
-        divRes.insertAdjacentHTML('beforeend', `<div class="resFin">Encontre Camino: [${caminoFinal}]</div>`);
+        divRes.insertAdjacentHTML('beforeend', `<div class="resFin">Encontre Camino: <code>[${caminoFinal}]</code></div>`);
         return;
       }
       Object.keys(nodos[posActual]['conexiones']).map(keyVecino =>{
@@ -127,6 +128,7 @@ export default class Resultado extends Component {
             camino[keyVecino] = posActual;
             GAcum[keyVecino] = gCalc;
             FAcum[keyVecino] = GAcum[keyVecino] + parseFloat(nodos[keyVecino]['heuristica']);
+            divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Nuevo Camino a <code>(nodo: ${keyVecino})</code> desde <code>(nodo: ${posActual})</code> con <code>(F Acumulado =${FAcum[keyVecino]})</code>, <code>(G Acumulado = ${gCalc})</code></div>`);
           }
         }
       })
@@ -141,12 +143,12 @@ export default class Resultado extends Component {
           }
           return 0;
         })
-        divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Nueva Lista Abierta: [${listaAbierta}]</div>`);
+        divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Nueva Lista Abierta: <code>[${listaAbierta}]</code></div>`);
         console.log("nueva abierta", listaAbierta);
         count++;
         divRes.insertAdjacentHTML('beforeend', `<div class="titRes">--- Iteración ${count} ---</div>`);
       }else{
-        divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Nueva Lista Abierta: [${listaAbierta}]</div>`);
+        divRes.insertAdjacentHTML('beforeend', `<div class="proRes">Nueva Lista Abierta: <code>[${listaAbierta}]</code></div>`);
       }
     }
     divRes.insertAdjacentHTML('beforeend', `<div class="proRes">--- Se acabo el Algoritmo sin exito ---</div>`);
@@ -155,8 +157,8 @@ export default class Resultado extends Component {
   mostrarResultado = caminoFinal =>{
         var divRes = document.getElementById("resultado");
         divRes.insertAdjacentHTML('afterBegin', `<div class="resFin">
-        El resultado final es: ${caminoFinal.map(val => `
-          <div>${val}:  Costo Acumulado: ${this.state.GAcum[val]}</div>
+        El orden del resultado final es:  ${caminoFinal.map(val => `
+          <div>(Nodo ${val}):  Costo Acumulado: ${this.state.GAcum[val]}</div>
           `).join('')}
         </div>`);
   }
